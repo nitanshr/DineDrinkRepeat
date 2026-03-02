@@ -1,0 +1,19 @@
+---
+const links = [
+  ['/', 'Home'],
+  ['/bars', 'Bars'],
+  ['/cocktails', 'Cocktails'],
+  ['/spirits', 'Spirits'],
+  ['/guides', 'Guides'],
+  ['/about', 'About'],
+  ['/newsletter', 'Newsletter']
+];
+---
+
+<nav class="site-nav container" aria-label="Main navigation">
+  {
+    links.map(([href, label]) => (
+      <a href={href}>{label}</a>
+    ))
+  }
+</nav>

@@ -1,0 +1,27 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const latest = (await getCollection('posts', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 6);
+---
+
+<BaseLayout title="DineDrinkRepeat | Home" description="Modern drinks culture: bars, cocktails, spirits, and guides.">
+  <p class="eyebrow">Minimal. Fast. Practical.</p>
+  <h1>DineDrinkRepeat</h1>
+  <p>Actionable writing for bar teams and curious drinkers.</p>
+
+  <section>
+    <h2>Latest Posts</h2>
+    <div class="grid cols-3">
+      {latest.map((post) => (
+        <article class="card">
+          <p class="eyebrow">{post.data.category} · {post.data.city}</p>
+          <h3><a href={`/stories/${post.slug}/`}>{post.data.title}</a></h3>
+          <p>{post.data.venue} · {post.data.readingTime} min read</p>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

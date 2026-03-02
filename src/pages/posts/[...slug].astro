@@ -1,0 +1,22 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<BaseLayout title="DineDrinkRepeat | Posts" description="All DineDrinkRepeat stories.">
+  <p class="eyebrow">Archive</p>
+  <h1>All Stories</h1>
+  <div class="grid cols-2">
+    {posts.map((post) => (
+      <article class="card">
+        <p class="eyebrow">{post.data.category} · {post.data.city}</p>
+        <h2><a href={`/stories/${post.slug}/`}>{post.data.title}</a></h2>
+        <p>{post.data.venue} · {post.data.readingTime} min read</p>
+      </article>
+    ))}
+  </div>
+</BaseLayout>
